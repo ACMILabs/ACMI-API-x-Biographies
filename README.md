@@ -15,6 +15,8 @@ Run it in Google Colab: [![Open In Colab][colab-badge]][colab-notebook]
 [colab-notebook]: <https://colab.research.google.com/drive/1iwBeiIKNnM2jzoimmlrejPTMvnL28pXB>
 [colab-badge]: <https://colab.research.google.com/assets/colab-badge.svg>
 
+<img src="./_images/ACMI-Public-API-x-Wikipedia-biographies.png" width="100%"></img>
+
 ### Python
 
 Run `python3 acmi_api_biographies.py` to first search the ACMI Works API for creators named `Simon`, and then search the Wikipedia API to get an extract of the biography of that person.
