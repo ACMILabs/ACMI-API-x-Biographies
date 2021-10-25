@@ -6,6 +6,15 @@ ACMI Public API example matching internet biographies to Work creators.
 
 An example of matching Wikipedia biography data to ACMI collection creators.
 
+### Jupyter Notebook
+
+The Jupyter Notebook code to run this example on [Google Colab](https://colab.research.google.com) can be found in in the file `acmi_api_biographies.ipynb`.
+
+Run it in Google Colab: [![Open In Colab][colab-badge]][colab-notebook]
+
+[colab-notebook]: <https://colab.research.google.com/drive/1iwBeiIKNnM2jzoimmlrejPTMvnL28pXB>
+[colab-badge]: <https://colab.research.google.com/assets/colab-badge.svg>
+
 ### Python
 
 Run `python3 acmi_api_biographies.py` to first search the ACMI Works API for creators named `Simon`, and then search the Wikipedia API to get an extract of the biography of that person.
@@ -25,7 +34,3 @@ Extract: Phil Simon (born ca. 1972) is an American speaker, professor, and autho
 
 ...
 ```
-
-### Jupyter Notebook
-
-TODO...
