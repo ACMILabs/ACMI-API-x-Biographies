@@ -1,4 +1,4 @@
-# ACMI-API-x-Biographie
+# ACMI API x internet biography metadata
 
 ACMI Public API example matching internet biographies to Work creators.
 
