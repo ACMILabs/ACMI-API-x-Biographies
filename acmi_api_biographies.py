@@ -2,6 +2,7 @@
 Use the ACMI Public API to match internet biographies to ACMI collection Works.
 """
 
+import random
 import requests
 
 # Search for ACMI creators with 'Simon' in their name
@@ -42,6 +43,10 @@ else:
                 creators.add(creator.get('name'))
 
     print(f'Found {len(creators)} ACMI creators who are directors: {creators}')
+
+if len(creators) > 10:
+    # Let's be nice and limit our search to 10 ACMI creators
+    creators = random.sample(creators, 10)
 
 # Search Wikipedia for information on each person
 for creator in creators:
