@@ -2,9 +2,9 @@
 
 ACMI Public API example matching internet biographies to Work creators.
 
-## Wikipedia biography data
+## Wikidata and Wikipedia biography data
 
-An example of matching Wikipedia biography data to ACMI collection creators.
+An example of matching Wikidata and Wikipedia biography data to ACMI collection creators.
 
 ### Jupyter Notebook
 
@@ -26,13 +26,25 @@ Example output:
 ```bash
 $ python3 acmi_api_biographies.py
 
-Found 14 ACMI creators with simon in their name: {'Jamil Simon', 'Phil Simon', 'Jamil Simon Productions', 'Simon Trevor', 'Simon Wincer', 'Simon Price', 'Simon Bruty', 'Simon Penny', 'Simon McIntyre', 'Simon Moore', 'Simon West', 'Simon Bejer', 'Simon Terrill', 'Simon Maidment'}
+Found 20 ACMI works made by a creator with simon in their name.
 
-Sorry, no data from Wikipedia for: Jamil Simon
+Matching biographies for ACMI collection item: Noise TV - Darebin Music Feast (108853)
+ACMI API: https://api.acmi.net.au/works/108853/
+ACMI Website: https://www.acmi.net.au/works/108853--noise-tv-darebin-music-feast/
 
-Wikipedia data for Phil Simon: https://en.wikipedia.org/wiki/Phil_Simon
-Title: Phil Simon
-Extract: Phil Simon (born ca. 1972) is an American speaker, professor, and author. He writes about management, technology, disruption, communication, and analytics.
+🥳 Matched ACMI Simon Moore (8931) to WikiData: Simon Moore (Q7519378) - British screenwriter
+Wikidata: https://www.wikidata.org/wiki/Q7519378
+Wikipedia: https://en.wikipedia.org/wiki/Simon_Moore_(writer)
+Wikipedia extract: Simon Moore is a British screenwriter, director, and playwright. He is best known as writer for the 1989 six-part BBC miniseries about the international illegal drug trade, Traffik, the basis for the 2000 American crime film Traffic and the 2004 three-part USA network miniseries by the same name.
+IMDB person: https://www.imdb.com/name/nm0601881/
+TMDB person: https://www.themoviedb.org/person/21705
+Image: https://upload.wikimedia.org/wikipedia/commons/f/fd/Simon_Moore.jpg
+
+Matching biographies for ACMI collection item: Turangawaewae (108601)
+ACMI API: https://api.acmi.net.au/works/108601/
+ACMI Website: https://www.acmi.net.au/works/108601--turangawaewae/
+
+😭 Sorry, no Wikidata matches for: Simon Price
 
 ...
 ```
