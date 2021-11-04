@@ -7,39 +7,37 @@ import requests
 
 from wikidata.client import Client as WikidataClient
 
-# Search for ACMI works made by a creator with 'Simon' in their name
-ACMI_SEARCH_QUERY = 'Simon'.lower()
-works = []
-works_with_biographies = []
+# Get the creators for the ACMI Work ID 113980 (Mad Max)
+ACMI_WORK_ID = '113980'
+creators = []
 
-if ACMI_SEARCH_QUERY:
-    search_response = requests.get(
-        'https://api.acmi.net.au/search/',
-        params={
-            'query': ACMI_SEARCH_QUERY,
-            'field': 'creators_primary.name',
-        },
-    ).json()
+api_response = requests.get(
+    f'https://api.acmi.net.au/works/{ACMI_WORK_ID}',
+).json()
 
-    works.extend(search_response['results'])
+if api_response['creators_primary']:
+    creators.extend(api_response['creators_primary'])
+if api_response['creators_other']:
+    creators.extend(api_response['creators_other'])
 
-    print(
-        f'Found {len(works)} ACMI works made by a creator with '
-        f'{ACMI_SEARCH_QUERY} in their name: {[w["title"] for w in works]}'
-    )
+unique_creators = list(OrderedDict((c['name'], c) for c in creators).values())
+for creator in unique_creators:
+    # Add all of their roles to 'roles'
+    creator['roles'] = [d['role'] for d in creators if d['name'] in creator['name']]
+    # TODO: Use TMDB person ID to match Wikidata results after we add it to the Work API
+    # Add work type to aid Wikidata matches for now
+    creator['roles'].append(api_response['type'])
+    if 'cast' in creator['roles']:
+        creator['roles'].append('actor')
+
+print(f'\nACMI collection item: {api_response["title"]} ({api_response["id"]})')
+print(f'API: https://api.acmi.net.au/works/{api_response["id"]}/')
+print(f'Website: https://www.acmi.net.au/works/{api_response["id"]}--{api_response["slug"]}/')
+
+if unique_creators:
+    print(f'\nCreators: {", ".join([c["name"] for c in unique_creators])}')
 else:
-    # Let's search for all directors instead
-    search_response = requests.get(
-        'https://api.acmi.net.au/search/',
-        params={
-            'query': 'director',
-            'field': 'creators_primary.role',
-        },
-    ).json()
-
-    works.extend(search_response['results'])
-
-    print(f'Found {len(works)} ACMI works featuring a director: {[w["title"] for w in works]}')
+    print(f'\nNo creators found for {api_response["title"]}, sorry!')
 
 
 def add_biography(creator_data):
@@ -61,7 +59,7 @@ def add_biography(creator_data):
     for result in wikidata_search_response['search']:
         for role in creator_data['roles']:
             try:
-                if not match and role in result['description']:
+                if not match and role.lower() in result['description'].lower():
                     match = True
                     creator_data['wikidata'] = result
                     print(
@@ -121,21 +119,21 @@ def add_biography(creator_data):
                     except KeyError:
                         pass
                     try:
-                        creator_data['twitter'] = \
-                            entity.data['claims']['P2002'][0]['mainsnak']['datavalue']['value']
-                        print(f'Twitter: https://twitter.com/{creator_data["twitter"]}')
+                        creator_data['viaf_id'] = \
+                            entity.data['claims']['P214'][0]['mainsnak']['datavalue']['value']
+                        print(f'VIAF ID: {creator_data["viaf_id"]}')
                     except KeyError:
                         pass
                     try:
-                        creator_data['instagram'] = \
-                            entity.data['claims']['P2003'][0]['mainsnak']['datavalue']['value']
-                        print(f'Instagram: https://instagram.com/{creator_data["instagram"]}')
+                        creator_data['loc_auth_id'] = \
+                            entity.data['claims']['P244'][0]['mainsnak']['datavalue']['value']
+                        print(f'Library of Congress authority ID: {creator_data["loc_auth_id"]}')
                     except KeyError:
                         pass
                     try:
-                        creator_data['facebook'] = \
-                            entity.data['claims']['P2013'][0]['mainsnak']['datavalue']['value']
-                        print(f'Facebook: https://facebook.com/{creator_data["facebook"]}')
+                        creator_data['worldcat_id'] = \
+                            entity.data['claims']['P7859'][0]['mainsnak']['datavalue']['value']
+                        print(f'WorldCat Identities ID: {creator_data["worldcat_id"]}')
                     except KeyError:
                         pass
                 else:
@@ -149,21 +147,5 @@ def add_biography(creator_data):
     return creator_data, match
 
 
-for work in works:
-    print(f'\nMatching biographies for ACMI collection item: {work["title"]} ({work["id"]})')
-    print(f'ACMI API: https://api.acmi.net.au/works/{work["id"]}/')
-    print(f'ACMI Website: https://www.acmi.net.au/works/{work["id"]}--{work["slug"]}/')
-    # Sort the creators by ID
-    sorted_creators = sorted(work['creators_primary'], key=lambda c: c['id'], reverse=True)
-    # Only get biography data for unique creator names
-    unique_creators = list(OrderedDict((c['name'], c) for c in sorted_creators).values())
-    for creator in unique_creators:
-        # Add all of their roles to 'roles'
-        creator['roles'] = [d['role'] for d in sorted_creators if d['name'] in creator['name']]
-        # Add 'film' to help match people?
-        # creator['roles'].append('film')
-        if ACMI_SEARCH_QUERY:
-            if ACMI_SEARCH_QUERY in creator['name'].lower():
-                add_biography(creator)
-        else:
-            add_biography(creator)
+for creator in unique_creators:
+    add_biography(creator)
