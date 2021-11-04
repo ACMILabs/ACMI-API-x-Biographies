@@ -119,21 +119,21 @@ def add_biography(creator_data):
                     except KeyError:
                         pass
                     try:
-                        creator_data['twitter'] = \
-                            entity.data['claims']['P2002'][0]['mainsnak']['datavalue']['value']
-                        print(f'Twitter: https://twitter.com/{creator_data["twitter"]}')
+                        creator_data['viaf_id'] = \
+                            entity.data['claims']['P214'][0]['mainsnak']['datavalue']['value']
+                        print(f'VIAF ID: {creator_data["viaf_id"]}')
                     except KeyError:
                         pass
                     try:
-                        creator_data['instagram'] = \
-                            entity.data['claims']['P2003'][0]['mainsnak']['datavalue']['value']
-                        print(f'Instagram: https://instagram.com/{creator_data["instagram"]}')
+                        creator_data['loc_auth_id'] = \
+                            entity.data['claims']['P244'][0]['mainsnak']['datavalue']['value']
+                        print(f'Library of Congress authority ID: {creator_data["loc_auth_id"]}')
                     except KeyError:
                         pass
                     try:
-                        creator_data['facebook'] = \
-                            entity.data['claims']['P2013'][0]['mainsnak']['datavalue']['value']
-                        print(f'Facebook: https://facebook.com/{creator_data["facebook"]}')
+                        creator_data['worldcat_id'] = \
+                            entity.data['claims']['P7859'][0]['mainsnak']['datavalue']['value']
+                        print(f'WorldCat Identities ID: {creator_data["worldcat_id"]}')
                     except KeyError:
                         pass
                 else:
