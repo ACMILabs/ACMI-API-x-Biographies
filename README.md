@@ -39,4 +39,7 @@ In 2006, Miller won the Academy Award for Best Animated Feature for Happy Feet (
 IMDB person: https://www.imdb.com/name/nm0004306/
 TMDB person: https://www.themoviedb.org/person/20629
 Image: https://upload.wikimedia.org/wikipedia/commons/1/18/George_Miller_-_Happy_Feet_2.jpg
+VIAF ID: 17273086
+Library of Congress authority ID: no88004808
+WorldCat Identities ID: lccn-no88004808
 ```
